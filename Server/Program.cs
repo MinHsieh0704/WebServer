@@ -36,8 +36,6 @@ namespace Server
             LogService.LogFileName = $"{DateTime.Now.ToString("yyyyMMddHHmmss")}-{{{{type}}}}-{{{{date}}}}-{{{{index}}}}.log";
             PrintService = new Print(LogService);
 
-            PrintService.Log("App Start", Print.EMode.info);
-
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Min_Helpers.PrintHelper;
 
 namespace Server
 {
@@ -29,8 +31,23 @@ namespace Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                Program.PrintService.Log("App Start", Print.EMode.info);
+            });
+
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                Program.PrintService.Log("App Stopping", Print.EMode.warning);
+            });
+
+            lifetime.ApplicationStopped.Register(() =>
+            {
+                Program.PrintService.Log("App Stopped", Print.EMode.warning);
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
