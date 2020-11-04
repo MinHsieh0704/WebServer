@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "start": "dotnet run -c Release -p Server",
+        "start:debug": "dotnet run -c Debug -p Server",
+        "publish": "dotnet publish -c Release -o Server/bin/Publish Server"
+    }
+}
